@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.specify/scripts/bash/setup-plan.sh:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\ndocs: generate implementation plan for Bazi analysis feature\n\nPhase 0-1 complete: Plan and Research documents\n\nplan.md:\n- Technical context: React 18 + TypeScript + TanStack Query\n- Architecture: Frontend-only, LocalStorage storage, ChatGPT API integration\n- Project structure with component/service/test organization\n- Constitution compliance: All 4 principles PASS\n- Technology decisions documented with rationale\n- Implementation roadmap through Phase 2\n\nresearch.md:\n- Bazi calculation: Use ''bazi'' npm package \\(verified accuracy\\)\n- ChatGPT integration: OpenAI official package, user-provided API key\n- State management: TanStack Query v5 + React Context\n- Testing strategy: Test fixtures for independent story testing \\(per clarification\\)\n- UI framework: Tailwind CSS for responsive web design\n- Build tool: Vite with TypeScript support\n- Development flow and learning resources\n\nReady for Phase 2: Task generation \\(/speckit.tasks\\)\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Haiku 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}
