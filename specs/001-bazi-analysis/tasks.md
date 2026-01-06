@@ -44,7 +44,7 @@ description: "Task list for Bazi analysis web app implementation"
 - [x] T008 Create project structure: src/{components,pages,services,hooks,types,constants,context,utils}
 - [x] T009 [P] Create base types files: src/types/{bazi,analysis,api,storage}.types.ts (empty interfaces, will fill per story)
 - [x] T010 [P] Create base constants file: src/constants/messages.ts with Traditional Chinese UI messages
-- [ ] T011 Set up Git configuration and initial commit for project scaffold
+- [x] T011 Set up Git configuration and initial commit for project scaffold
 
 ---
 
