@@ -34,16 +34,16 @@ description: "Task list for Bazi analysis web app implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create React + TypeScript project using Vite per quickstart.md
-- [ ] T002 Install core dependencies (React, TypeScript, TanStack Query, Tailwind CSS, Vitest)
-- [ ] T003 [P] Configure Vite (vite.config.ts) with React plugin and TypeScript support
-- [ ] T004 [P] Configure Tailwind CSS (tailwind.config.js) with responsive breakpoints and color scheme
-- [ ] T005 [P] Configure TypeScript (tsconfig.json) with strict mode and path aliases
-- [ ] T006 [P] Configure Vitest (vitest.config.ts) with jsdom environment and test setup
-- [ ] T007 [P] Configure ESLint (.eslintrc.json) and Prettier (.prettierrc) for code quality
-- [ ] T008 Create project structure: src/{components,pages,services,hooks,types,constants,context,utils}
-- [ ] T009 [P] Create base types files: src/types/{bazi,analysis,api,storage}.types.ts (empty interfaces, will fill per story)
-- [ ] T010 [P] Create base constants file: src/constants/messages.ts with Traditional Chinese UI messages
+- [x] T001 Create React + TypeScript project using Vite per quickstart.md
+- [x] T002 Install core dependencies (React, TypeScript, TanStack Query, Tailwind CSS, Vitest)
+- [x] T003 [P] Configure Vite (vite.config.ts) with React plugin and TypeScript support
+- [x] T004 [P] Configure Tailwind CSS (tailwind.config.js) with responsive breakpoints and color scheme
+- [x] T005 [P] Configure TypeScript (tsconfig.json) with strict mode and path aliases
+- [x] T006 [P] Configure Vitest (vitest.config.ts) with jsdom environment and test setup
+- [x] T007 [P] Configure ESLint (.eslintrc.json) and Prettier (.prettierrc) for code quality
+- [x] T008 Create project structure: src/{components,pages,services,hooks,types,constants,context,utils}
+- [x] T009 [P] Create base types files: src/types/{bazi,analysis,api,storage}.types.ts (empty interfaces, will fill per story)
+- [x] T010 [P] Create base constants file: src/constants/messages.ts with Traditional Chinese UI messages
 - [ ] T011 Set up Git configuration and initial commit for project scaffold
 
 ---
