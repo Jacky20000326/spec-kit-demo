@@ -69,13 +69,62 @@
 ✅ **PASS** - Tailwind CSS ensures consistent UI patterns. Error messages planned in accessible Traditional Chinese. Loading states, success feedback designed for all user actions.
 
 ### Principle 4: Performance Requirements
-✅ **PASS** - Performance targets defined:
-- Chart calc <2s ✅
-- Page load <3s ✅
-- Analysis generation <3s (ChatGPT API) ✅
+⚠️ **CONDITIONAL PASS** - Performance targets defined with architectural justification:
+- Chart calc <2s ✅ (bazi 庫離線計算)
+- Page load <3s ⚠️ (包括 ChatGPT API，見下方 Complexity Tracking)
+- Analysis generation <3s (ChatGPT API call) ✅
 - Responsive design for mobile ✅
 
-**No violations detected.** Plan aligns with all 4 constitution principles.
+**Important**: 頁面加載 <3s 超過憲法 <2s p95 目標，但因外部服務邊界而必要（詳見 Complexity Tracking）。
+
+---
+
+## Complexity Tracking
+
+本計畫對憲法原則 4（效能要求）有一項必要違規。以下說明該違規的正當性：
+
+| 違規項目 | 為何必要 | 被拒絕的替代方案 |
+|---------|---------|-----------------|
+| **效能目標衝突**: <3s 頁面加載（包括 ChatGPT）vs 憲法 <2s p95 延遲 | ChatGPT 3 API 呼叫因外部服務依賴，固有延遲為 2-3+ 秒。八字圖表計算透過離線 bazi 庫嚴格控制在 <2s。整體使用者流程（輸入 → 計算 → 分析）<3s 符合使用者期望，並尊重外部服務邊界的現實約束。此目標達成 SC-001（完成流程時間）的驗收標準。 | **無法消除 ChatGPT 延遲而不犧牲分析品質**：純規則引擎方案無 LLM 支持，會產生機械式、非個性化的分析文本，無法滿足 SC-007（使用者滿意度 >80%）和 FR-014（自然語言分析）的要求。規則引擎已實現一致性和可測試性，LLM 增加分析深度。 |
+| **測試與真實 API**: Task T124 使用真實 ChatGPT API 可能違反憲法「易波動的測試絕不可接受」 | 真實 API 測試（於 T062-mock 單元測試之後）驗證整合品質。單元測試使用 mock 後進行手動測試階段，確保最終驗收的 prompt 品質。真實測試僅在 mock 層驗收通過後執行。 | **Mock 無法驗證 ChatGPT prompt 品質**：LLM 回應難以預測，mock 無法捕捉 prompt 工程的實際效果。僅 Mock 測試無法確保分析文本準確性、可理解性和傳統文化敏感度。 |
+
+### 效能邊界定義
+
+為明確外部服務邊界，本計畫採用分層效能目標：
+
+1. **第一層 (離線計算)**:
+   - 八字圖表計算: <2s ✅ (完全離線，bazi 庫原生)
+   - 輸入驗證: <200ms
+   - UI 渲染: <1s
+   - **層級總計**: <3s
+
+2. **第二層 (外部服務)**:
+   - ChatGPT API 呼叫: 2–3s (不可控，外部服務邊界)
+   - 網絡延遲: ±500ms (ISP 依賴)
+   - **層級特性**: 非線性，使用者可觀察
+
+3. **整體 SLO**:
+   - 圖表生成完成（不含分析）: <3s p95 ✅
+   - 完整流程（含分析生成）: <5s p95 ✅ (目標達成，符合使用者期望)
+   - 分析文本快取後的重複存取: <2s p95 ✅
+
+### 風險緩解
+
+為確保憲法合規性，實施下列措施：
+
+- **T062**: 新增 Mock 層測試任務（在 T124 之前）以確保單元測試獨立、穩定
+- **T034**: 輸入驗證和錯誤界面提供即時反饋 (<200ms)，使用者不會感覺延遲
+- **T081**: 快取機制確保重複查詢時 <2s p95
+- **T115**: 效能監控和分析，追蹤 ChatGPT API 延遲、錯誤率、quota 使用
+- **T118**: 性能分析和優化，識別並消除任何非必要的延遲
+
+### 結論
+
+此違規**完全正當化**，理由如下：
+1. 違規限於外部服務邊界（ChatGPT API），不涉及應用邏輯或設計缺陷
+2. 替代方案（純規則引擎）會嚴重降低使用者滿意度（SC-007），不可接受
+3. 已採取具體風險緩解措施確保可靠性和效能監控
+4. 整體使用者體驗符合目標（<5s 完整流程），超過使用者期望
 
 ---
 

@@ -155,8 +155,8 @@ description: "Task list for Bazi analysis web app implementation"
 - [ ] T059 [P] [US3] Unit test for career rules: frontend/tests/unit/analysisRules.test.ts (career strengths detection)
 - [ ] T060 [P] [US3] Unit test for wealth/fortune rules: frontend/tests/unit/analysisRules.test.ts (wealth indicators)
 - [ ] T061 [P] [US3] Unit test for relationship/compatibility rules: frontend/tests/unit/analysisRules.test.ts
-- [ ] T062 [US3] Integration test for ChatGPT API call: frontend/tests/integration/apiIntegration.test.ts (API key handling, prompt building, response parsing)
-- [ ] T063 [US3] Integration test for full analysis generation: frontend/tests/integration/analysisGeneration.test.ts (chart → rules → ChatGPT → result)
+- [ ] T062 [US3] Integration test for ChatGPT API with MOCKED responses: frontend/tests/integration/apiIntegration.test.ts (verify API key handling, prompt building, response parsing using mocked ChatGPT responses to ensure test reliability per Constitution Principle 2 - no flaky tests)
+- [ ] T063 [US3] Integration test for full analysis generation: frontend/tests/integration/analysisGeneration.test.ts (chart → rules → mocked ChatGPT → result, verify all 5 analysis dimensions present)
 
 ### Implementation for User Story 3
 
@@ -267,7 +267,7 @@ description: "Task list for Bazi analysis web app implementation"
 - [ ] T121 Create DEVELOPMENT.md: frontend/docs/DEVELOPMENT.md (development guide)
 - [ ] T122 Create API INTEGRATION.md: frontend/docs/API_INTEGRATION.md (ChatGPT API key setup)
 - [ ] T123 Test complete flow end-to-end: input → chart → analysis → save → load → share
-- [ ] T124 Manual testing with real ChatGPT API: verify analysis quality and terminology
+- [ ] T124 Manual testing with REAL ChatGPT API (after T062 mocked tests pass): frontend/tests/manual/ verify analysis quality, terminology accessibility, and user satisfaction with actual API responses (final acceptance testing only, not part of automated test suite per Constitution Principle 2)
 - [ ] T125 Verify all success criteria (SC-001 through SC-007) are met: performance, accuracy, satisfaction
 - [ ] T126 Final commit and merge to main branch
 
