@@ -54,23 +54,23 @@ description: "Task list for Bazi analysis web app implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T012 [P] Install bazi npm package and create wrapper service: frontend/src/services/baziCalculation.ts
-- [ ] T013 [P] Install openai npm package and create ChatGPT integration service: frontend/src/services/chatgptAnalysis.ts
-- [ ] T014 [P] Implement input validation utility: frontend/src/utils/validation.ts (date/time validation functions)
-- [ ] T015 [P] Implement date conversion utility: frontend/src/utils/dateConversion.ts (Gregorian-to-Lunar helpers)
-- [ ] T016 [P] Implement LocalStorage service: frontend/src/services/storage.ts with save/load/clear methods
-- [ ] T017 [P] Create ApiKeyContext for ChatGPT API key management: frontend/src/context/ApiKeyContext.tsx
-- [ ] T018 [P] Create AppContext for global app state: frontend/src/context/AppContext.tsx
-- [ ] T019 Set up TanStack Query provider and queryClient: frontend/src/queryClient.ts
-- [ ] T020 [P] Create common components: frontend/src/components/Common/{LoadingSpinner,ErrorBoundary,Toast,Header}.tsx
-- [ ] T021 [P] Create base layout component: frontend/src/components/Layout/AppLayout.tsx
-- [ ] T022 Create test fixtures for Bazi charts: frontend/tests/fixtures/baziCharts.fixture.ts (20+ test charts)
-- [ ] T023 [P] Create test fixtures for test data: frontend/tests/fixtures/testData.ts (valid/invalid birth profiles)
-- [ ] T024 Set up test utilities and helpers: frontend/tests/setup.ts
-- [ ] T025 Create analysis rule definitions: frontend/src/constants/analysisRuleDefinitions.ts (personality, career, wealth, relationship, outlook rules)
-- [ ] T026 Implement rule engine service: frontend/src/services/analysisRules.ts (matches chart to rules)
-- [ ] T027 Create Bazi mappings (Five Elements, Ten Gods, Stems/Branches): frontend/src/constants/baziMappings.ts
-- [ ] T028 Create app config with placeholders: frontend/src/config.ts (API endpoints, constants)
+- [x] T012 [P] Install bazi npm package and create wrapper service: frontend/src/services/baziCalculation.ts
+- [x] T013 [P] Install openai npm package and create ChatGPT integration service: frontend/src/services/chatgptAnalysis.ts
+- [x] T014 [P] Implement input validation utility: frontend/src/utils/validation.ts (date/time validation functions)
+- [x] T015 [P] Implement date conversion utility: frontend/src/utils/dateConversion.ts (Gregorian-to-Lunar helpers)
+- [x] T016 [P] Implement LocalStorage service: frontend/src/services/storage.ts with save/load/clear methods
+- [x] T017 [P] Create ApiKeyContext for ChatGPT API key management: frontend/src/context/ApiKeyContext.tsx
+- [x] T018 [P] Create AppContext for global app state: frontend/src/context/AppContext.tsx
+- [x] T019 Set up TanStack Query provider and queryClient: frontend/src/queryClient.ts
+- [x] T020 [P] Create common components: frontend/src/components/Common/{LoadingSpinner,ErrorBoundary,Toast,Header}.tsx
+- [x] T021 [P] Create base layout component: frontend/src/components/Layout/AppLayout.tsx
+- [x] T022 Create test fixtures for Bazi charts: frontend/tests/fixtures/baziCharts.fixture.ts (20+ test charts)
+- [x] T023 [P] Create test fixtures for test data: frontend/tests/fixtures/testData.ts (valid/invalid birth profiles)
+- [x] T024 Set up test utilities and helpers: frontend/tests/setup.ts
+- [x] T025 Create analysis rule definitions: frontend/src/constants/analysisRuleDefinitions.ts (personality, career, wealth, relationship, outlook rules)
+- [x] T026 Implement rule engine service: frontend/src/services/analysisRules.ts (matches chart to rules)
+- [x] T027 Create Bazi mappings (Five Elements, Ten Gods, Stems/Branches): frontend/src/constants/baziMappings.ts
+- [x] T028 Create app config with placeholders: frontend/src/config.ts (API endpoints, constants)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -90,13 +90,13 @@ description: "Task list for Bazi analysis web app implementation"
 
 ### Implementation for User Story 1
 
-- [ ] T032 [P] [US1] Create BirthDateForm component: frontend/src/components/Input/BirthDateForm.tsx (year, month, day, hour, minute inputs)
-- [ ] T033 [US1] Implement form submission handler with validation: frontend/src/components/Input/BirthDateForm.tsx
-- [ ] T034 [P] [US1] Create error message component: frontend/src/components/Input/BirthDateForm.tsx (display validation errors in plain Chinese)
-- [ ] T035 [US1] Add date boundary checking (1900-2100 range check with accuracy warning): frontend/src/utils/validation.ts
-- [ ] T036 [US1] Implement future date prevention: frontend/src/utils/validation.ts
-- [ ] T037 [P] [US1] Create custom hook for form state: frontend/src/hooks/useBirthProfileInput.ts
-- [ ] T038 [US1] Integrate BirthDateForm into HomePage: frontend/src/pages/HomePage.tsx
+- [x] T032 [P] [US1] Create BirthDateForm component: frontend/src/components/Input/BirthDateForm.tsx (year, month, day, hour, minute inputs)
+- [x] T033 [US1] Implement form submission handler with validation: frontend/src/components/Input/BirthDateForm.tsx
+- [x] T034 [P] [US1] Create error message component: frontend/src/components/Input/BirthDateForm.tsx (display validation errors in plain Chinese)
+- [x] T035 [US1] Add date boundary checking (1900-2100 range check with accuracy warning): frontend/src/utils/validation.ts
+- [x] T036 [US1] Implement future date prevention: frontend/src/utils/validation.ts
+- [x] T037 [P] [US1] Create custom hook for form state: frontend/src/hooks/useBaziCalculation.ts
+- [x] T038 [US1] Integrate BirthDateForm into HomePage: frontend/src/pages/HomePage.tsx
 
 ### Integration for User Story 1
 
