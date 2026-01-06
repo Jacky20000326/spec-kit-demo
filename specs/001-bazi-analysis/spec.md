@@ -5,6 +5,18 @@
 **Status**: Draft
 **Input**: User description: "本應用為命理分析 App，使用者需輸入出生年、月、日（可選填出生時辰）。系統依據傳統八字排盤規則，自動計算天干地支，生成使用者專屬八字星盤。應用將根據五行分佈、十神配置與格局判斷，分析使用者在性格特質、事業發展、財運走勢、感情關係與近期運勢等面向的狀況。分析結果以結構化文字呈現，內容需清楚、易理解，避免過度專業術語，並支援後續擴充如年度流年分析與個人化建議模組。"
 
+## Clarifications
+
+### Session 2026-01-06
+
+- Q: Bazi calculation engine - build from scratch or use existing library? → A: Use existing Bazi library (JavaScript/TypeScript) to reduce risk and ensure accuracy compliance
+- Q: Analysis text generation strategy? → A: Rule-based templates approach - define analysis rules based on Five Elements/Ten Gods/pillar combinations, combine with templates for readable text output
+- Q: Testing strategy for independent user stories? → A: Test fixtures approach - pre-calculate sample Bazi charts as test fixtures; each story tests independently using fixtures (enables parallel testing per constitution)
+- Q: Calendar conversion edge cases & accuracy boundaries? → A: Explicit accuracy boundaries - support 1900-2100 with 100% accuracy claim; dates outside show "calculated with estimated accuracy" warning
+- Q: 用戶配置檔案儲存與管理策略? → A: 單一配置檔案模式 - 一次僅存一個配置；保存新的會覆蓋舊的；最簡化 MVP 範圍
+
+---
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Birth Profile Input (Priority: P1)
@@ -61,17 +73,18 @@ Based on the calculated Bazi chart, the system analyzes and displays the user's 
 
 ### User Story 4 - Result Sharing & Storage (Priority: P2)
 
-Users can save their profile and optionally share analysis results with others through text copy or social sharing.
+Users can save their analysis result locally and share it with others through text copy.
 
-**Why this priority**: Increases app engagement and virality. Secondary priority since core analysis (P1 stories) must work first.
+**Why this priority**: Enables result preservation and sharing. Secondary priority since core analysis (P1 stories) must work first.
 
 **Independent Test**: Can verify save and share functionality independently - ensure data persists correctly and share formats are readable.
 
 **Acceptance Scenarios**:
 
-1. **Given** user completes their analysis, **When** they tap save/store profile, **Then** profile is saved locally and can be retrieved later
-2. **Given** user wants to share results, **When** they select share option, **Then** formatted text is copied to clipboard (copyable) or can be shared via system share sheet
-3. **Given** user retrieves a saved profile, **When** they open it, **Then** all analysis is identical to original generation (no recalculation)
+1. **Given** user completes their analysis, **When** they tap save profile, **Then** the analysis is saved to LocalStorage and can be retrieved after page reload
+2. **Given** user wants to share results, **When** they select share/copy option, **Then** formatted analysis text is copied to clipboard for sharing via messaging or email
+3. **Given** user saves a new analysis, **When** they save it, **Then** the new analysis replaces the previously saved profile (single profile mode)
+4. **Given** user saves an analysis, **When** they refresh the browser, **Then** the saved analysis is restored from LocalStorage
 
 ---
 
@@ -93,8 +106,8 @@ The architecture supports future expansion with annual Bazi forecast (Luck Cycle
 ### Edge Cases
 
 - What happens when user provides only year and month (no day)? → System requires at least year-month-day; day is mandatory
-- How does system handle leap year dates or traditionally ambiguous calendar conversions? → Uses standard Gregorian-to-Lunar conversion with clear notation of limitations
-- What if user enters birth time but it's outside valid range (e.g., 25:00)? → System shows time validation error with format examples
+- How does system handle leap year dates or traditionally ambiguous calendar conversions? → Uses standard Gregorian-to-Lunar conversion. For dates 1900–2100: full 100% accuracy. For dates before 1900 or after 2100: displays "calculated with estimated accuracy" warning to user
+- What if user enters birth time but it's outside valid range (e.g., 25:00)? → System shows time validation error with format examples (valid range: 00:00–23:59)
 - Can user update their birth information after initial entry? → Yes, regenerating chart with new calculation; previous version discarded
 - Does system work offline? → Analysis engine should be fully offline-capable; data syncing is future consideration (not in MVP)
 
@@ -117,10 +130,10 @@ The architecture supports future expansion with annual Bazi forecast (Luck Cycle
 - **FR-010**: System MUST provide wealth and financial fortune analysis (財運走勢) based on chart configuration
 - **FR-011**: System MUST provide romantic and relationship analysis (感情關係) based on chart indicators and Ten Gods
 - **FR-012**: System MUST provide near-term outlook and current period guidance (近期運勢) with practical suggestions
-- **FR-013**: System MUST present all analysis results in structured text format using clear, accessible language
-- **FR-014**: System MUST minimize use of specialized Bazi terminology; where necessary, brief explanations must be included
-- **FR-015**: System MUST allow users to save their profile locally for later retrieval
-- **FR-016**: System MUST support copying/sharing analysis results in readable text format
+- **FR-013**: System MUST present all analysis results in structured text format using clear, accessible language via rule-based template engine that generates text based on chart indicators
+- **FR-014**: System MUST minimize use of specialized Bazi terminology; where necessary, brief explanations must be included. Analysis rules MUST map Bazi concepts (Five Elements, Ten Gods, pillar strengths) to accessible personality/career/financial language
+- **FR-015**: System MUST allow users to save their analysis to LocalStorage (single profile mode: new saves overwrite previous profile). Profile must persist across browser sessions
+- **FR-016**: System MUST support copying analysis results to clipboard in readable text format for sharing via messaging, email, or other applications
 
 ### Key Entities
 
@@ -151,9 +164,9 @@ The architecture supports future expansion with annual Bazi forecast (Luck Cycle
 
 - **SC-001**: Users can input their birth information and receive a Bazi chart within 2 seconds of submission
 - **SC-002**: Analysis text for all five dimensions (personality, career, wealth, relationships, outlook) must be readable and understandable by users without Bazi knowledge (test: 90% of first-time users complete reading without needing to look up terminology)
-- **SC-003**: Bazi chart calculations must be verified as accurate against traditional Eight Characters system (100% accuracy against verified reference data)
+- **SC-003**: Bazi chart calculations for birth dates between 1900–2100 must be verified as accurate against traditional Eight Characters system (100% accuracy against verified reference data). For dates outside this range, system displays "calculated with estimated accuracy" warning
 - **SC-004**: Users can save and retrieve their profile without losing any information (100% data persistence)
-- **SC-005**: System must work reliably for birth dates spanning at least 100 years (1920–2026) without calculation errors
+- **SC-005**: System must work reliably for birth dates spanning 1900–2100 without calculation errors; dates outside this range show appropriate accuracy warnings
 - **SC-006**: Application must remain responsive even when processing complex chart calculations (no UI freezing, calculations complete in under 2 seconds)
 - **SC-007**: Users should feel the analysis provides genuine personal insight (target: 85% user satisfaction rating on profile relevance and accuracy)
 
@@ -165,7 +178,7 @@ The architecture supports future expansion with annual Bazi forecast (Luck Cycle
 
 2. **Time Zone & Location**: Birth time is assumed to be local solar time. System does not require timezone input (simplification for MVP); future versions can add timezone adjustment.
 
-3. **Accuracy Limitations**: Traditional Bazi requires precise birth time; without hour data, Hour Pillar analysis is limited. System clearly indicates this limitation when time is not provided.
+3. **Accuracy Limitations**: Traditional Bazi requires precise birth time; without hour data, Hour Pillar analysis is limited. System clearly indicates this limitation when time is not provided. Calendar conversion accuracy: system guarantees 100% accuracy for births 1900–2100; dates outside this range show "estimated accuracy" warning to users.
 
 4. **Data Privacy**: User birth profiles are stored locally on device; no cloud sync in MVP. Future versions can add optional cloud backup.
 
@@ -179,11 +192,16 @@ The architecture supports future expansion with annual Bazi forecast (Luck Cycle
 
 **Language/Version**: Web app (to be implemented in React, Vue, or similar framework)
 
-**Primary Dependencies**: Bazi calculation library or custom implementation; Date/Calendar library for Gregorian-to-Lunar conversion
+**Primary Dependencies**: Established Bazi calculation library (JavaScript/TypeScript); Date/Calendar library for Gregorian-to-Lunar conversion (if not included in Bazi library)
 
-**Storage**: Browser LocalStorage for saving user profiles and chart results
+**Storage**: Browser LocalStorage for saving single user profile and chart results. Single profile mode: new profile saves automatically overwrite previous saved data
 
-**Testing**: Unit tests for chart calculation, integration tests for full user flows, end-to-end tests for analysis generation, manual testing for analysis quality
+**Testing**:
+- Unit tests for chart calculation and input validation
+- Rule engine tests for analysis text generation (verify rule mappings against fixture charts)
+- Test fixtures: Pre-calculated Bazi charts stored for independent story testing (enables parallel test execution per Principle 2)
+- Integration tests for full user flows (combining all stories)
+- Manual testing for analysis quality, terminology accessibility, and user satisfaction
 
 **Target Platform**: Web browser (desktop and mobile responsive)
 
