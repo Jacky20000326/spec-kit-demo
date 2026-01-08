@@ -19,7 +19,8 @@ export function PillarDisplay({ pillar, label }: PillarDisplayProps) {
     水: 'bg-blue-50 border-blue-200',
   };
 
-  const bgColor = elementColorMap[pillar.element || ''] || 'bg-gray-50 border-gray-200';
+  const bgColor =
+    elementColorMap[pillar.element || ''] || 'bg-gray-50 border-gray-200';
 
   return (
     <div className={`rounded-lg border-2 p-4 text-center ${bgColor}`}>
