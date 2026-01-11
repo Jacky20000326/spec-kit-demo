@@ -11,7 +11,13 @@
       "Bash(git commit:*)",
       "Bash(npm run dev:*)",
       "Bash(curl:*)",
-      "Bash(git mv:*)"
+      "Bash(git mv:*)",
+      "Bash(./.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(git fetch:*)",
+      "Bash(.specify/scripts/bash/create-new-feature.sh:*)",
+      "Bash(xargs ls:*)",
+      "Bash(wc:*)",
+      "Bash(tree:*)"
     ]
   }
 }
