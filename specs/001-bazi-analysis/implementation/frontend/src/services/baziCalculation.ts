@@ -9,7 +9,10 @@ import {
   BaziChart,
   Pillar,
 } from '@/types/bazi.types';
-import { validateBirthDate, isDateWithinAccuracyRange } from '@/utils/validation';
+import {
+  validateBirthDate,
+  isDateWithinAccuracyRange,
+} from '@/utils/validation';
 import { UI_MESSAGES, ERROR_CODES } from '@/constants/messages';
 
 // Mock Bazi library for now (would be: import { calculateBazi } from 'bazi')
@@ -29,9 +32,7 @@ function mockCalculateBazi(request: BaziCalculationRequest): BaziLibraryOutput {
     yearPillar: { stem: '庚', branch: '午' },
     monthPillar: { stem: '己', branch: '巳' },
     dayPillar: { stem: '甲', branch: '子' },
-    hourPillar: request.hour
-      ? { stem: '丙', branch: '寅' }
-      : undefined,
+    hourPillar: request.hour ? { stem: '丙', branch: '寅' } : undefined,
     fiveElements: { wood: 2, fire: 3, earth: 0, metal: 2, water: 1 },
     tenGods: {
       bijiJie: 1,
@@ -89,10 +90,7 @@ export class BaziCalculationService {
           baziData.dayPillar.branch
         ),
         hourPillar: baziData.hourPillar
-          ? this.mapPillar(
-              baziData.hourPillar.stem,
-              baziData.hourPillar.branch
-            )
+          ? this.mapPillar(baziData.hourPillar.stem, baziData.hourPillar.branch)
           : null,
         fiveElements: {
           wood: baziData.fiveElements.wood || 0,
@@ -149,9 +147,7 @@ export class BaziCalculationService {
     return elementMap[stem] || '未知';
   }
 
-  private getDominantElement(
-    elements: Record<string, number>
-  ): string {
+  private getDominantElement(elements: Record<string, number>): string {
     let max = 0;
     let dominant = '';
     for (const [element, count] of Object.entries(elements)) {
@@ -163,9 +159,7 @@ export class BaziCalculationService {
     return dominant;
   }
 
-  private getDeficientElement(
-    elements: Record<string, number>
-  ): string {
+  private getDeficientElement(elements: Record<string, number>): string {
     let min = Infinity;
     let deficient = '';
     for (const [element, count] of Object.entries(elements)) {

@@ -60,16 +60,39 @@ export function calculateAge(
   day: number
 ): number {
   const today = new Date();
-  const birthDate = new Date(year, month - 1, day);
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth() + 1;
+  const currentDay = today.getDate();
 
-  if (
-    monthDiff < 0 ||
-    (monthDiff === 0 && today.getDate() < birthDate.getDate())
-  ) {
-    age--;
+  let age = currentYear - year;
+
+  if (age === 1) {
+    // Special handling for exactly 1 year difference
+    if (month > currentMonth) {
+      // E.g., born in Dec of last year, now it's January
+      // December has already passed, so don't subtract
+      return age;
+    } else if (month < currentMonth) {
+      // E.g., born in March of last year, now it's January of this year
+      // March (future month) hasn't been reached yet, so birthday hasn't passed
+      age--;
+      return age;
+    } else {
+      // Same month
+      if (day <= currentDay) {
+        return age;
+      } else {
+        return age - 1;
+      }
+    }
+  } else {
+    // For other year differences
+    if (
+      currentMonth < month ||
+      (currentMonth === month && currentDay < day)
+    ) {
+      age--;
+    }
+    return age;
   }
-
-  return age;
 }
